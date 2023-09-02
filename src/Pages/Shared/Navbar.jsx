@@ -8,10 +8,24 @@ import { MdAddLink } from "react-icons/md";
 import useAuth from "../../Hooks/useAuth";
 import { toast } from "react-hot-toast";
 import Switcher from "../../Hooks/Switcher/Switcher";
+import { useCartContext } from "../../GlobalContext/CartContext";
 
 const Navbar = () => {
   const { user, logOut, setLoading } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
+  const { carts } = useCartContext();
+
+  const subTotal = carts
+    .reduce(
+      (sum, item) =>
+        item?.product_price_per_unit * item?.product_quantity + sum,
+      0
+    )
+    .toFixed(2);
+  const subTotalQuantity = carts.reduce(
+    (sum, item) => item?.product_quantity + sum,
+    0
+  );
 
   const navigate = useNavigate();
 
@@ -150,7 +164,7 @@ const Navbar = () => {
                       />
                     </svg>
                     <span className="badge badge-sm indicator-item bg-sh text-white">
-                      {"getCarts?.length"}
+                      {subTotalQuantity}
                     </span>
                   </div>
                 </label>
@@ -160,10 +174,13 @@ const Navbar = () => {
                 >
                   <div className="card-body dark:bg-dark-1 rounded-lg">
                     <span className="font-bold text-lg dark:text-white">
-                      {"getCarts?.length"} Items
+                      {carts?.length} Items
+                    </span>
+                    <span className=" dark:text-white">
+                      {subTotalQuantity} Quantity
                     </span>
                     <span className="text-info dark:text-gray-500">
-                      Total: <span className="font-bold">{"subTotal"}</span> TK
+                      Total: <span className="font-bold">{subTotal}</span> TK
                     </span>
                     <div className="card-actions">
                       <Link to={`/shop/cart/details`}>
@@ -339,7 +356,7 @@ const Navbar = () => {
                         />
                       </svg>
                       <span className="badge badge-sm indicator-item bg-sh text-white">
-                        {"00"}
+                        {subTotalQuantity}
                       </span>
                     </div>
                   </label>
@@ -349,12 +366,13 @@ const Navbar = () => {
                   >
                     <div className="card-body dark:bg-dark-1 rounded-lg">
                       <span className="font-bold text-lg dark:text-white">
-                        {"getCarts?.length"} Items
+                        {carts?.length} Items
                       </span>
-                      <span className=" dark:text-white">{"00"} Quantity</span>
+                      <span className=" dark:text-white">
+                        {subTotalQuantity} Quantity
+                      </span>
                       <span className="text-info dark:text-gray-500">
-                        Total: <span className="font-bold">{"subTotal"}</span>{" "}
-                        TK
+                        Total: <span className="font-bold">{subTotal}</span> TK
                       </span>
                       <div className="card-actions">
                         <Link to={`/shop/cart/details`}>

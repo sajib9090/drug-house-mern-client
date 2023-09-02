@@ -2,14 +2,13 @@ import { FaFacebook, FaLinkedin, FaPinterest, FaTwitter } from "react-icons/fa";
 import payment from "../../assets/shikder-drug-house-resources/images/payment.png";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import { AiOutlineCheck } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
-
 import StarRating from "../StarRating/StarRating";
 import Shipping from "../../Pages/Home/CustomerChoice/Shipping";
 import { useProductContext } from "../../GlobalContext/ProductContext";
 import Loader from "../Loader/Loader";
+import { useCartContext } from "../../GlobalContext/CartContext";
 
 const ProductDetails = () => {
   const {
@@ -18,8 +17,12 @@ const ProductDetails = () => {
     isSingleProductError,
     singleProduct,
   } = useProductContext();
+  const { handleAddToCart, carts } = useCartContext();
 
   const { id } = useParams();
+
+  // if the product is added in carts then add to cart button is replaced by check carts
+  const existingItem = carts?.findIndex((item) => item._id === id);
 
   useEffect(() => {
     getSingleProduct(`${import.meta.env.VITE_API_URL}/product/${id}`);
@@ -167,9 +170,6 @@ const ProductDetails = () => {
                                 setQuantity(quantity - 1);
                                 setQuantityError("");
                               }
-                              // else if (quantity == 1) {
-                              //   setQuantityError("You Should Buy At Least One.");
-                              // }
                             }}
                             className="text-lg font-bold duration-700 dark:text-white bg-sh hover:bg-opacity-sh-70 hover:rounded-3xl text-white w-8 h-8 text-center cursor-not-allowed"
                             disabled
@@ -194,10 +194,33 @@ const ProductDetails = () => {
                           </button>
                         )}
                       </div>
-                      <button className="bg-sh rounded hover:rounded-3xl text-white h-[40px] w-[120px] hover:bg-opacity-sh-70 duration-700">
-                        {/* <AiOutlineLoading3Quarters className="animate-spin mx-auto h-6 w-6" /> */}
-                        Add To Cart
-                      </button>
+                      {existingItem === 0 ? (
+                        <Link to={"/shop/cart/details"}>
+                          <button className="bg-sh rounded hover:rounded-3xl text-white h-[40px] w-[120px] hover:bg-opacity-sh-70 duration-700">
+                            Check Cart
+                          </button>
+                        </Link>
+                      ) : (
+                        <Link
+                          to={"/shop/cart/details"}
+                          onClick={() =>
+                            handleAddToCart(singleProduct, quantity)
+                          }
+                        >
+                          {singleProduct.medicine_available_quantity == 0 ? (
+                            <button
+                              disabled
+                              className="bg-sh rounded hover:rounded-3xl cursor-not-allowed text-white h-[40px] w-[120px] hover:bg-opacity-sh-70 duration-700"
+                            >
+                              Add To Cart
+                            </button>
+                          ) : (
+                            <button className="bg-sh rounded hover:rounded-3xl text-white h-[40px] w-[120px] hover:bg-opacity-sh-70 duration-700">
+                              Add To Cart
+                            </button>
+                          )}
+                        </Link>
+                      )}
                     </div>
                     <div className="divider mt-5"></div>
                     <div className="flex items-center gap-2 mb-3">

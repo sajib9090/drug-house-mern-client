@@ -20,14 +20,6 @@ const Shop = () => {
   } = useFilterProductContext();
   const { isProductLoading, isProductError } = state;
 
-  const [price, setPrice] = useState(0);
-
-  // Event handler to update the state when the input value changes
-  const handlePriceChange = (event) => {
-    setPrice(event.target.value);
-  };
-  console.log(price);
-
   return (
     <div className="max-w-7xl mx-auto dark:bg-dark-2">
       <div className="h-[50vh] md:h-[80vh] md:max-h-[400px] shop">
