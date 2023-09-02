@@ -83,6 +83,17 @@ const CartReducer = (state, action) => {
     });
     return { ...state, carts: updatedProductQuantity };
   }
+
+  //remove single item from cart
+  if (action.type === "REMOVE_SINGLE_ITEM") {
+    let updatedCart = state?.carts?.filter(
+      (currentItem) => currentItem?._id !== action?.payload?._id
+    );
+    return {
+      ...state,
+      carts: updatedCart,
+    };
+  }
   // remove all data from cart
   if (action.type === "REMOVE_CART_DATA") {
     return {

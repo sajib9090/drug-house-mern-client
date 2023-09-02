@@ -36,6 +36,11 @@ const CartProvider = ({ children }) => {
     dispatch({ type: "SET_CART_ITEM_QUANTITY_DECREMENT", payload: item });
   };
 
+  //remove single item
+  const itemRemove = (item) => {
+    dispatch({ type: "REMOVE_SINGLE_ITEM", payload: item });
+  };
+
   //remove all cart data
   const handleRemoveAll = () => {
     dispatch({ type: "REMOVE_CART_DATA" });
@@ -55,6 +60,7 @@ const CartProvider = ({ children }) => {
         handleRemoveAll,
         handlePlus,
         handleMinus,
+        itemRemove,
       }}
     >
       {children}

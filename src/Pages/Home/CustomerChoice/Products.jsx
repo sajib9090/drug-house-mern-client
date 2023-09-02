@@ -6,11 +6,14 @@ import { RxCross2 } from "react-icons/rx";
 import { BsFillEyeFill } from "react-icons/bs";
 import React from "react";
 import useAuth from "../../../Hooks/UseAuth";
+import { Link } from "react-router-dom";
+import { useCartContext } from "../../../GlobalContext/CartContext";
 const Products = () => {
   const { user } = useAuth();
-  const state = useProductContext();
   const { customerChoiceCategoryProducts, isProductLoading, isProductError } =
-    state;
+    useProductContext();
+
+  const { handleAddToCart, carts } = useCartContext();
 
   return (
     <div className="md:h-[630px] px-4 md:px-8">
@@ -113,8 +116,19 @@ const Products = () => {
                           : product.medicine_name
                       }
                       price={product?.medicine_price_per_unit}
-                      button={"Buy Now"}
-                      isDisabled={false}
+                      button={
+                        product?.medicine_available_quantity == 0 ? (
+                          "Out Of Stock"
+                        ) : carts?.some(
+                            (item) => item?._id === product?._id
+                          ) ? (
+                          <Link to={"/shop/cart/details"}>Check Cart</Link>
+                        ) : (
+                          "Add to cart"
+                        )
+                      }
+                      handleButtonClick={() => handleAddToCart(product, 1)}
+                      isDisabled={product?.medicine_available_quantity == 0}
                       to={`/shop/product_details/${product?._id}`}
                       stock={
                         product.medicine_available_quantity == 0 ? (

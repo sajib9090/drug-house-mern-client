@@ -1,16 +1,18 @@
 import { AiOutlineCheck } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
-import { BsFillEyeFill, BsSearch } from "react-icons/bs";
+import { BsFillEyeFill } from "react-icons/bs";
 import ProductCard from "../../Components/ProductCard/ProductCard";
 import { useProductContext } from "../../GlobalContext/ProductContext";
-import React, { useState } from "react";
+import React from "react";
 import Loader from "../../Components/Loader/Loader";
 import useAuth from "../../Hooks/UseAuth";
 import { useFilterProductContext } from "../../GlobalContext/FilterContext";
+import { useCartContext } from "../../GlobalContext/CartContext";
+import { Link } from "react-router-dom";
 
 const Shop = () => {
   const { user } = useAuth();
-  const state = useProductContext();
+  const { isProductLoading, isProductError } = useProductContext();
   const {
     filteredProducts,
     handleOptionChange,
@@ -18,7 +20,8 @@ const Shop = () => {
     handleInputChange,
     searchInput,
   } = useFilterProductContext();
-  const { isProductLoading, isProductError } = state;
+
+  const { handleAddToCart, carts } = useCartContext();
 
   return (
     <div className="max-w-7xl mx-auto dark:bg-dark-2">
@@ -116,6 +119,7 @@ const Shop = () => {
                           }
                           price={product?.medicine_price_per_unit}
                           button={"Buy Now"}
+                          handleButtonClick={() => handleAddToCart(product, 1)}
                           isDisabled={true}
                           stock={
                             product.medicine_available_quantity == 0 ? (
@@ -163,8 +167,19 @@ const Shop = () => {
                               : product.medicine_name
                           }
                           price={product?.medicine_price_per_unit}
-                          button={"Buy Now"}
-                          isDisabled={false}
+                          button={
+                            product?.medicine_available_quantity == 0 ? (
+                              "Out Of Stock"
+                            ) : carts?.some(
+                                (item) => item?._id === product?._id
+                              ) ? (
+                              <Link to={"/shop/cart/details"}>Check Cart</Link>
+                            ) : (
+                              "Add to cart"
+                            )
+                          }
+                          handleButtonClick={() => handleAddToCart(product, 1)}
+                          isDisabled={product?.medicine_available_quantity == 0}
                           to={`/shop/product_details/${product?._id}`}
                           stock={
                             product.medicine_available_quantity == 0 ? (

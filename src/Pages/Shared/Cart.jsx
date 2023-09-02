@@ -6,7 +6,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 
 const Cart = () => {
-  const { carts, handleRemoveAll, handlePlus, handleMinus } = useCartContext();
+  const { carts, handleRemoveAll, handlePlus, handleMinus, itemRemove } =
+    useCartContext();
 
   const deliveryCharge = 60;
 
@@ -149,7 +150,7 @@ const Cart = () => {
                       </button>
                     </th>
                     <th>
-                      <button>
+                      <button onClick={() => itemRemove(cart)}>
                         <CiCircleRemove className="h-6 w-6 dark:text-white" />
                       </button>
                     </th>
@@ -252,12 +253,12 @@ const Cart = () => {
                   >
                     Are you sure want to remove all item from the cart?
                   </Dialog.Title>
-                  <div className="mt-2">
+                  {/* <div className="mt-2">
                     <p className="text-sm text-gray-500">
                       Your payment has been successfully submitted. We’ve sent
                       you an email with all of the details of your order.
                     </p>
-                  </div>
+                  </div> */}
 
                   <div className="mt-4 flex justify-center space-x-2">
                     <button
@@ -265,14 +266,14 @@ const Cart = () => {
                       className="rounded-3xl border border-transparent bg-red-600 px-4 py-1 text-sm font-medium text-white hover:bg-opacity-70"
                       onClick={removeAll}
                     >
-                      Delete
+                      Yes
                     </button>
                     <button
                       type="button"
                       className="rounded-3xl border border-transparent bg-sh px-4 py-1 text-sm font-medium text-white hover:bg-opacity-sh-70"
                       onClick={closeModal}
                     >
-                      Cancel
+                      No
                     </button>
                   </div>
                 </Dialog.Panel>

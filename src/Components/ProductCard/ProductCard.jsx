@@ -43,7 +43,7 @@ const ProductCard = (props) => {
         <button
           onClick={props.handleButtonClick}
           disabled={props.isDisabled}
-          className="bg-[#009F7F] border-none text-xs md:text-sm hover:bg-sh duration-700 text-white px-5 py-2 md:py-3 hover:bg-sh hover:bg-opacity-sh-75 rounded hover:rounded-3xl w-[100px] "
+          className="bg-[#009F7F] border-none text-xs md:text-sm hover:bg-sh duration-700 text-white px-5 py-2 md:py-3 hover:bg-sh hover:bg-opacity-sh-75 rounded hover:rounded-3xl w-[120px] "
         >
           {props.button}
         </button>

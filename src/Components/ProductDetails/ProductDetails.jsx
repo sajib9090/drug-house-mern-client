@@ -194,7 +194,7 @@ const ProductDetails = () => {
                           </button>
                         )}
                       </div>
-                      {existingItem === 0 ? (
+                      {existingItem == 0 ? (
                         <Link to={"/shop/cart/details"}>
                           <button className="bg-sh rounded hover:rounded-3xl text-white h-[40px] w-[120px] hover:bg-opacity-sh-70 duration-700">
                             Check Cart
