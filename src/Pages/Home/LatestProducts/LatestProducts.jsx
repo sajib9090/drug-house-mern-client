@@ -14,9 +14,7 @@ const LatestProducts = () => {
   const { isProductLoading, isProductError, products } = useProductContext();
   const { handleAddToCart, carts } = useCartContext();
 
-  let latestCategoryProducts = products?.filter(
-    (item) => item.category === "latest"
-  );
+  let latestCategoryProducts = [];
 
   return (
     <div className="mt-32 bg-gray-100 dark:bg-dark-1 gap-x-4 max-w-7xl mx-auto px-4 md:px-8">
@@ -37,7 +35,7 @@ const LatestProducts = () => {
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-5 gap-6 pb-6">
-              {latestCategoryProducts?.slice(0, 10).map((product) => (
+              {latestCategoryProducts?.slice(0, 10)?.map((product) => (
                 <React.Fragment key={product?._id}>
                   {user?.email === product?.seller_email ? (
                     <ProductCard

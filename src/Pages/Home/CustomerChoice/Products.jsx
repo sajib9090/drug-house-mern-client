@@ -12,9 +12,7 @@ const Products = () => {
   const { user } = useAuth();
   const { products, isProductLoading, isProductError } = useProductContext();
   const { handleAddToCart, carts } = useCartContext();
-  let customerChoiceCategoryProducts = products?.filter(
-    (item) => item.category === "customer_choice"
-  );
+  let customerChoiceCategoryProducts = [];
 
   return (
     <div className="md:h-[630px] px-4 md:px-8">
@@ -35,7 +33,7 @@ const Products = () => {
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {customerChoiceCategoryProducts?.slice(0, 4).map((product) => (
+              {customerChoiceCategoryProducts?.slice(0, 4)?.map((product) => (
                 <React.Fragment key={product?._id}>
                   {user?.email === product?.seller_email ? (
                     <ProductCard
