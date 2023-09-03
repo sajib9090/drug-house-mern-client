@@ -10,10 +10,11 @@ import { Link } from "react-router-dom";
 import { useCartContext } from "../../../GlobalContext/CartContext";
 const Products = () => {
   const { user } = useAuth();
-  const { customerChoiceCategoryProducts, isProductLoading, isProductError } =
-    useProductContext();
-
+  const { products, isProductLoading, isProductError } = useProductContext();
   const { handleAddToCart, carts } = useCartContext();
+  let customerChoiceCategoryProducts = products?.filter(
+    (item) => item.category === "customer_choice"
+  );
 
   return (
     <div className="md:h-[630px] px-4 md:px-8">

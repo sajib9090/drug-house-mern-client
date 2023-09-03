@@ -11,10 +11,12 @@ import { Link } from "react-router-dom";
 
 const LatestProducts = () => {
   const { user } = useAuth();
-  const { isProductLoading, isProductError, latestCategoryProducts } =
-    useProductContext();
-
+  const { isProductLoading, isProductError, products } = useProductContext();
   const { handleAddToCart, carts } = useCartContext();
+
+  let latestCategoryProducts = products?.filter(
+    (item) => item.category === "latest"
+  );
 
   return (
     <div className="mt-32 bg-gray-100 dark:bg-dark-1 gap-x-4 max-w-7xl mx-auto px-4 md:px-8">

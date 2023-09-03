@@ -7,22 +7,10 @@ const ProductReducer = (state, action) => {
       };
 
     case "SET_API_DATA":
-      /* eslint-disable */
-      const latestCategoryData = action.payload.filter((currentElement) => {
-        return currentElement?.category === "latest";
-      });
-      const customerChoiceCategoryData = action.payload.filter(
-        (currentElement) => {
-          return currentElement?.category === "customer_choice";
-        }
-      );
-
       return {
         ...state,
         isProductLoading: false,
         products: action.payload,
-        latestCategoryProducts: latestCategoryData,
-        customerChoiceCategoryProducts: customerChoiceCategoryData,
       };
     case "API_ERROR":
       return {

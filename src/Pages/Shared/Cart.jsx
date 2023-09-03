@@ -1,13 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCartContext } from "../../GlobalContext/CartContext";
 import { CiCircleRemove } from "react-icons/ci";
 import Marquee from "react-fast-marquee";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import useAuth from "../../Hooks/UseAuth";
 
 const Cart = () => {
+  const { user } = useAuth();
   const { carts, handleRemoveAll, handlePlus, handleMinus, itemRemove } =
     useCartContext();
+  const navigate = useNavigate();
 
   const deliveryCharge = 60;
 
@@ -36,6 +39,14 @@ const Cart = () => {
   const removeAll = () => {
     handleRemoveAll();
     setIsOpen(false);
+  };
+
+  const handleCheckOut = () => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      navigate("/shop");
+    }
   };
 
   return (
@@ -213,7 +224,10 @@ const Cart = () => {
               </div>
               <div className="divider my-0 dark:border-b dark:border-white"></div>
               <div className="text-right pb-10 mt-2">
-                <button className="bg-sh py-[5px] px-6 text-white rounded-3xl animate-bounce hover:animate-none hover:bg-opacity-sh-75 duration-700">
+                <button
+                  onClick={handleCheckOut}
+                  className="bg-sh py-[5px] px-6 text-white rounded-3xl hover:bg-opacity-sh-75 duration-700"
+                >
                   Check Out
                 </button>
               </div>

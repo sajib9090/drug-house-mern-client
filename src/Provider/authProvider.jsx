@@ -66,7 +66,7 @@ const AuthProvider = ({ children }) => {
       setUser(loggedInUser);
       //jwt
       if (loggedInUser?.email) {
-        fetch(`${import.meta.env.VITE_API_URL}/jwt`, {
+        fetch(`/api/jwt`, {
           method: "POST",
           headers: {
             "content-type": "application/json",

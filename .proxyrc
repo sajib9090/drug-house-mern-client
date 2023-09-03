@@ -1,0 +1,5 @@
+{
+  "/api": {
+    "target": "https://drug-house-mern-server-production.up.railway.app/"
+  }
+}

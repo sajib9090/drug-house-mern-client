@@ -59,7 +59,7 @@ const SignUp = () => {
                 name: data.name,
                 email: data.email,
               };
-              fetch(`${import.meta.env.VITE_API_URL}/add/users`, {
+              fetch(`/api/add/users`, {
                 method: "POST",
                 headers: {
                   "content-type": "application/json",
@@ -119,7 +119,7 @@ const SignUp = () => {
             email: user.email,
             image: user.photoURL,
           };
-          fetch(`${import.meta.env.VITE_API_URL}/add/users`, {
+          fetch(`/api/add/users`, {
             method: "POST",
             headers: {
               "content-type": "application/json",

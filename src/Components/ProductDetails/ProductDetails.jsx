@@ -25,7 +25,7 @@ const ProductDetails = () => {
   const existingItem = carts?.findIndex((item) => item._id === id);
 
   useEffect(() => {
-    getSingleProduct(`${import.meta.env.VITE_API_URL}/product/${id}`);
+    getSingleProduct(`/api/product/${id}`);
   }, []);
 
   const [quantity, setQuantity] = useState(1);

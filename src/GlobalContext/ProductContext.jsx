@@ -4,14 +4,12 @@ import reducer from "../Reducers/ProductReducer";
 
 const ProductContext = createContext();
 
-const API = `${import.meta.env.VITE_API_URL}/all/products`;
+const API = `/api/all/products`;
 
 const initialState = {
   isProductLoading: false,
   isProductError: false,
   products: [],
-  latestCategoryProducts: [],
-  customerChoiceCategoryProducts: [],
   //get single product mechanism
   isSingleProductLoading: false,
   isSingleProductError: false,

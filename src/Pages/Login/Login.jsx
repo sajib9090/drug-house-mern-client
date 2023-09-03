@@ -65,7 +65,7 @@ const Login = () => {
             image: user.photoURL,
           };
 
-          fetch(`${import.meta.env.VITE_API_URL}/add/users`, {
+          fetch(`/api/add/users`, {
             method: "POST",
             headers: {
               "content-type": "application/json",

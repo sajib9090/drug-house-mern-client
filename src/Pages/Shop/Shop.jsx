@@ -9,6 +9,7 @@ import useAuth from "../../Hooks/UseAuth";
 import { useFilterProductContext } from "../../GlobalContext/FilterContext";
 import { useCartContext } from "../../GlobalContext/CartContext";
 import { Link } from "react-router-dom";
+import useViewIncrement from "../../Hooks/useViewIncrement";
 
 const Shop = () => {
   const { user } = useAuth();
@@ -22,6 +23,10 @@ const Shop = () => {
   } = useFilterProductContext();
 
   const { handleAddToCart, carts } = useCartContext();
+  const { incrementView } = useViewIncrement();
+  const handleView = async (product) => {
+    await incrementView(product._id);
+  };
 
   return (
     <div className="max-w-7xl mx-auto dark:bg-dark-2">
@@ -179,6 +184,7 @@ const Shop = () => {
                             )
                           }
                           handleButtonClick={() => handleAddToCart(product, 1)}
+                          handleViewCount={() => handleView(product)}
                           isDisabled={product?.medicine_available_quantity == 0}
                           to={`/shop/product_details/${product?._id}`}
                           stock={
